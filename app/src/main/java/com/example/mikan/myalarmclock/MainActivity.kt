@@ -5,6 +5,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
+import android.media.SoundPool
 import android.os.Build
 import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.support.v7.app.AppCompatActivity
@@ -21,6 +23,9 @@ class MainActivity : AppCompatActivity()
 ,SimpleAlertDialog.OnClickListener
 ,DatePickerFragment.OnDateSelectedListner
 ,TimePickerFragment.OnTimeSelectedListner{
+
+    private lateinit var soundPool: SoundPool
+    private  var soundResId = 0
 
     override fun onSelected(year: Int, month: Int, date: Int) {
         val c = Calendar.getInstance()
@@ -45,23 +50,33 @@ class MainActivity : AppCompatActivity()
         finish()
     }
 
+    override fun onResume() {
+        super.onResume()
+        soundPool = SoundPool(2, AudioManager.STREAM_ALARM,0)
+        soundResId = soundPool.load(this,R.raw.a1,1)
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         if (intent?.getBooleanExtra("onReceive",false)== true) {
+
             when {
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ->
                     window.addFlags(FLAG_TURN_SCREEN_ON or
                             FLAG_SHOW_WHEN_LOCKED)
+
                 else ->
                     window.addFlags(FLAG_TURN_SCREEN_ON or
                     FLAG_SHOW_WHEN_LOCKED or FLAG_DISMISS_KEYGUARD)
 
 
             }
+
             val dialog = SimpleAlertDialog()
                     dialog.show(supportFragmentManager, "alert_dialog")
+            soundPool.play(soundResId,1.0f,100f,0,0,1.0f)
+
         }
         setContentView(R.layout.activity_main)
 

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyAlarmClock</string>
+    <string name="時間を選択" />
+    <string name="日付を選択">日付を選択</string>
 </resources>

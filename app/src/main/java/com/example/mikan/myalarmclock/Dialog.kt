@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.media.SoundPool
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.widget.DatePicker
@@ -16,6 +17,8 @@ import java.util.*
 
 class SimpleAlertDialog : DialogFragment() {
 
+    private lateinit var soundPool: SoundPool
+    private var soundResId = 0
 
     interface OnClickListener {
         fun onPositiveClick()
@@ -31,6 +34,11 @@ class SimpleAlertDialog : DialogFragment() {
         }
     }
 
+    public fun setSound(soundPool:SoundPool, soundResId:Int) {
+        this.soundPool = soundPool
+        this.soundResId = soundResId
+    }
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = context
@@ -41,10 +49,12 @@ class SimpleAlertDialog : DialogFragment() {
             setPositiveButton("起きる") { dialog, which ->
                 listener.onPositiveClick()
                 context.toast("起きるがクリックされました")
+                soundPool.stop(soundResId)
             }
             setNegativeButton("あと５分") { dialog, which ->
                 listener.onNegativeClick()
                 context.toast("あと５分がクリックされました")
+                soundPool.stop(soundResId)
             }
         }
         return builder.create()

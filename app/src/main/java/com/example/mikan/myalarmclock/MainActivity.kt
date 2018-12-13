@@ -5,6 +5,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.Build
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity()
     override fun onPositiveClick(){
         finish()
     }
+
     override fun onNegativeClick() {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
@@ -52,8 +54,6 @@ class MainActivity : AppCompatActivity()
 
     override fun onResume() {
         super.onResume()
-        soundPool = SoundPool(2, AudioManager.STREAM_ALARM,0)
-        soundResId = soundPool.load(this,R.raw.a1,1)
 
     }
 
@@ -69,13 +69,29 @@ class MainActivity : AppCompatActivity()
                 else ->
                     window.addFlags(FLAG_TURN_SCREEN_ON or
                     FLAG_SHOW_WHEN_LOCKED or FLAG_DISMISS_KEYGUARD)
+            }
 
-
+            soundPool = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                SoundPool(2, AudioManager.STREAM_ALARM, 0)
+            } else {
+                val audioAttributes = AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .build()
+                SoundPool.Builder()
+                        .setMaxStreams(1)
+                        .setAudioAttributes(audioAttributes)
+                        .build()
+            }
+            soundResId = soundPool.load(this, R.raw.a1, 1)
+            soundPool.setOnLoadCompleteListener{
+                soundPool, sampleId, status ->
+                soundPool.play(soundResId, 1.0f, 1.0f, 0, 1, 1.0f)
             }
 
             val dialog = SimpleAlertDialog()
-                    dialog.show(supportFragmentManager, "alert_dialog")
-            soundPool.play(soundResId,1.0f,100f,0,0,1.0f)
+            dialog.setSound(soundPool, soundResId)
+            dialog.show(supportFragmentManager, "alert_dialog")
+
 
         }
         setContentView(R.layout.activity_main)

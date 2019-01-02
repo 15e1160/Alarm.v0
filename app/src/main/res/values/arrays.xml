@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="txt_music_arr">
+        <item></item>
+        <item>目覚まし1</item>
+        <item>目覚まし2</item>
+        <itme>目覚まし3</itme>
+        <item>口笛ボレロ</item>
+        <item>口笛エーデルワイス</item>
+        <item>口笛カノン</item>
+        <item>ウルトラマン</item>
+        <item>鳩</item>
+        <item>君がくれたもの</item>
+    </string-array>
+</resources>

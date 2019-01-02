@@ -48,12 +48,12 @@ class SimpleAlertDialog : DialogFragment() {
             setMessage("時間になりました！　")
             setPositiveButton("起きる") { dialog, which ->
                 listener.onPositiveClick()
-                context.toast("起きるがクリックされました")
+                context.toast("おはようございます！")
                 soundPool.stop(soundResId)
             }
             setNegativeButton("あと５分") { dialog, which ->
                 listener.onNegativeClick()
-                context.toast("あと５分がクリックされました")
+                context.toast("５分後に再度アラームがなります。")
                 soundPool.stop(soundResId)
             }
         }

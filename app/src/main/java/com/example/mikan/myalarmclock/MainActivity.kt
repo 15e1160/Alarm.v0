@@ -12,11 +12,15 @@ import android.os.Build
 import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager.LayoutParams.*
+import android.widget.AdapterView
+import android.widget.Spinner
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 import java.text.DateFormat
 import java.text.ParseException
+import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.*
 

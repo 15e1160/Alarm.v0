@@ -86,7 +86,9 @@ class MainActivity : AppCompatActivity()
                         .setAudioAttributes(audioAttributes)
                         .build()
             }
-            soundResId = soundPool.load(this, R.raw.a1, 1)
+            val alarm_name = intent.getStringExtra("alarm_name")
+            val alarm_id = resources.getIdentifier(alarm_name, "raw", packageName)
+            soundResId = soundPool.load(this, alarm_id, 1)
             soundPool.setOnLoadCompleteListener{
                 soundPool, sampleId, status ->
                 soundPool.play(soundResId, 1.0f, 1.0f, 0, 1, 1.0f)
@@ -142,6 +144,7 @@ class MainActivity : AppCompatActivity()
     private fun setAlarmManager(calender: Calendar) {
         val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(this,AlarmBroadcastReceiver::class.java)
+        intent.putExtra("alarm_name", "a${spinner.selectedItemPosition}")
         val pending = PendingIntent.getBroadcast(
                 this,
                 0,

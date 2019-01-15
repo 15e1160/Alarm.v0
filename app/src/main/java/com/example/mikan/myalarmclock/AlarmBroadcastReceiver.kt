@@ -7,10 +7,11 @@ import org.jetbrains.anko.toast
 
 class AlarmBroadcastReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        val intent = Intent(context,MainActivity::class.java)
+        val next_intent = Intent(context,MainActivity::class.java)
                 .putExtra("onReceive",true)
+                .putExtra("alarm_name", intent?.getStringExtra("alarm_name"))
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context?.startActivity(intent)
+        context?.startActivity(next_intent)
 
     }
 }

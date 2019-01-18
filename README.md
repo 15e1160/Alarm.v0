@@ -15,7 +15,7 @@
 
 appの中からjavaを選択→com.example.mikan.myalarmclockを選択
 
-１、AlarmBroadcastReceiver-アラーム処理のプログラム(多分もう触ることはないでしょう)
+１、AlarmBroadcastReceiver-アラーム処理のプログラム(多分もう触ることはないでしょう)←そんなことはなかった。1/15触った
 
 ２、Daialog.kt-アラートダイアログ。通知とかトーストとかそういうの
 
